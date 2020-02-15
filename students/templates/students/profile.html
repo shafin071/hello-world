@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+                    {% if student_profile.avatar %}
+					<img src= "{{ student_profile.avatar.url }}" alt="">
+                    {% else %}
+                    <img src= "{% static 'img/anon.jpg' %}" alt="">
+                    {% endif %}
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						{{ student.first_name }} {{student.last_name}}
+					</div>
+					<div class="profile-usertitle-job">
+						Student
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+
+				<!-- SIDEBAR MENU -->
+				<!-- Nav tabs -->
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link active general-tab" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">General</a>
+                      <a class="nav-link courses-tab" id="v-pills-courses-tab" data-toggle="pill" href="#v-pills-courses" role="tab" aria-controls="v-pills-courses" aria-selected="false">Courses</a>
+                      <a class="nav-link billing-tab" id="v-pills-billing-tab" data-toggle="pill" href="#v-pills-billing" role="tab" aria-controls="v-pills-billing" aria-selected="false">Billing</a>
+                      <a class="nav-link account-tab" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Account</a>
+
+                    </div>
+
+				<!-- END MENU -->
+			</div>
+		</div>
+
+        <!-- PAGE CONTENT -->
+		<div class="col-md-9">
+            <div class="profile-content">
+			   <div class="tab-content" id="v-pills-tabContent">
+
+               <!-- General -->
+               <div class="tab-pane fade active show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                       <div class="row">
+                           <div class="col-7">
+                                <form method="post" action='{% url "students:edit_profile" slug=request.user.student_profile.slug%}'>{% csrf_token %}
+                                        {{ edit_name_form.first_name|as_crispy_field }}
+                                        {{ edit_name_form.last_name|as_crispy_field }}
+                                    <input type="submit" class="btn btn-primary" value="Save Changes" />
+                                    <a class='btn btn-light' href='{{ student_profile.get_absolute_url }}'>Cancel</a>
+                                </form>
+                           </div>
+                           <div class="col-5 my-1">
+                               <div class="card">
+                                   <div class="row my-2 mx-2">
+                                       <div class="col">
+                                           {% include 'students/image_upload.html' %}
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                       </div> <!-- row -->
+
+                        <div class="row my-6">
+                            <div class="col">
+                                {% include 'students/about_me.html' with form=about_me_form %}
+
+                               <!--<form class='about-me-form' method="post" action='{% url "students:about_me" %}'>{% csrf_token %}
+                                        {{ about_me_form|crispy }}
+                                    <input type="submit" class="btn btn-primary" value="Save Changes" />
+                                   <a class='btn btn-light' href='{{student_profile.get_absolute_url}}'>Cancel</a>
+                                </form> <br> -->
+                            </div>
+                        </div>
+               </div>
+
+
+               <!-- Courses Enrolled -->
+               <div class="tab-pane fade" id="v-pills-courses" role="tabpanel" aria-labelledby="v-pills-billing-tab">
+                   <h4>My Courses:</h4>
+                   <div class="row my-2">
+                       <div class="col-10">
+                       {% for course in course_list %}
+                            <div class="card my-2">
+                            <a class="nav-link" href="{{ course.get_absolute_url }}">
+                            <div class="row my-2 mx-2">
+                                <div class="col-1">
+                                    <div class="thumbnail-purchase-history">
+                                        {% if course.image %}
+                                            <img class="img rounded" src= "{{ course.image.url }}" alt="responsive">
+                                        {% else %}
+                                            <img class="img rounded" src="{% static 'img/coding1.jpg' %}" alt="Responsive image">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-10 my-2">
+                                    {{ course }} <br>
+                                </div>
+                            </div>
+                            </a>
+                        </div> <!-- card -->
+                       {% endfor %}
+                        </div> <!-- main col -->
+                   </div> <!-- main row -->
+                   </div>
+
+               <div class="tab-pane fade" id="v-pills-billing" role="tabpanel" aria-labelledby="v-pills-purchase-tab">
+                   <h4>Billing Address:</h4>
+                   <div class="row my-6">
+                            <div class="col">
+                               <form method="post" action='{% url "students:change_address" %}'>{% csrf_token %}
+                                        {{ address_change_form|crispy }}
+                                    <input type="submit" class="btn btn-primary" value="Save Changes" />
+                                   <!--<a class='btn btn-light' href='{{student_profile.get_absolute_url}}'>Cancel</a>-->
+                                </form> <br>
+                            </div>
+                   </div>
+               </div>
+
+               <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+                   <h4>My Account</h4>
+                   <div class="row my-3">
+                       <div class="col-2">
+                           <strong>Email:</strong>
+                       </div>
+                       <div class="col-9">
+                           {{ student.email }}
+                       </div>
+                   </div>
+                   <div class="row my-2">
+                       <div class="col-2">
+                           <strong>Password:</strong>
+                       </div>
+                       <div class="col-3">
+                           *************
+                       </div>
+                       <div class="col-5">
+                          <a class = 'btn btn-sm btn-primary' href = '{% url "students:change_password" %}'>Change Password</a><br>
+                       </div>
+                   </div>
+
+                   <hr>
+                   <a class = 'btn btn-sm btn-danger' href = '{% url "students:delete_account_confirm" %}'>Delete Account</a>
+               </div>
+
+               </div>
+            </div>
+		</div> <!-- page content col -->
+	</div> <!-- row -->
+</div> <!-- container -->
+
+<br>
+<br>
+
+{% endblock %}

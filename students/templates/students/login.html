@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+{% url 'students:register_page' as register_url %}
+
+<div class="container">
+    <div class='row'>
+        <div class="col">
+            <h5 class="my-4">Please log in or sign up to continue...</h5>
+
+            {% if error %}
+                <div class="row my-3">
+                    <font color="red" size="4"><li>{{ error }}</li></font>
+                </div>
+            {% endif %}
+
+             <form action="" method="post">
+                {% csrf_token %}
+
+                 {% if next_url %}
+                    <input type='hidden' name='next' value='{{ next_url }}' />
+                 {% endif %}
+
+                {{ login_form|crispy }}
+                <input type="submit" class="btn btn-default" value="Submit">
+                <a href = "{% url 'password_reset' %}">Forgot Password?</a>
+            </form>
+
+            <div class="row my-3">
+                <font size="4">
+                    Don't have an account?
+                    <a class="nav-link" href="{{ register_url }}?next={{redirect_path}}" tabindex="-1" aria-disabled="true">
+                        <font size="4" color="blue">Signup</font>
+                    </a>
+                </font>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    </div>
+
+
+
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,129 @@
+These are all attempts on upload pic function:
+
+-------------------------------------------------------------------------------------------------------------------
+
+# this one works as a stand alone function. Throws validation errors for non-image type files            
+def upload_pic(request):
+    print("request method is POST")
+    form = ImageUploadForm(request.POST, request.FILES)
+    context = {
+        "form": form,
+    }
+    if form.is_valid():
+        print("upload_pic form valid")
+        User = get_user_model()
+        user = User.objects.get(username="spiderman")
+        avatar = form.cleaned_data.get('profile_photo')
+        new_user_profile = StudentProfile.objects.create(user=user, avatar=avatar)
+        new_user_profile.save()
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'students/image_upload.html', context)
+    
+-------------------------------------------------------------------------------------
+
+    if request.method == 'POST':
+        print("request method is POST")
+        # form = ImageUploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            print("upload_pic form valid")
+            entry = form.save(commit=False)
+            User = get_user_model()
+            user = User.objects.get(username=student)
+            entry.user = user
+            entry.save()
+			
+			
+-------------------------------------------------------------------------------------------------------------------------			
+			
+			
+# this one works with model forms
+def upload_pic(request, form, username):
+    print("upload_pic")
+    if request.method == 'POST':
+        print("request method is POST")
+        # form = ImageUploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            print("upload_pic form valid")
+            entry = form.save(commit=False)
+            User = get_user_model()
+            user = User.objects.get(username=username)
+            entry.user = user
+            entry.save()
+
+            # avatar = form.clean('profile_photo')
+            # new_user_profile = StudentProfile.objects.create(user=user, avatar=avatar)
+            # new_user_profile.save()
+
+------------------------------------------------------------------------------------------------------------------------------
+
+# this one works as a stand alone function. Throws validation errors for non-image type files            
+def upload_pic(request):
+    print("request method is POST")
+    form = ImageUploadForm(request.POST, request.FILES)
+    context = {
+        "form": form,
+    }
+    if form.is_valid():
+        print("upload_pic form valid")
+        User = get_user_model()
+        user = User.objects.get(username="spiderman")
+        avatar = form.cleaned_data.get('profile_photo')
+        new_user_profile = StudentProfile.objects.create(user=user, avatar=avatar)
+        new_user_profile.save()
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'students/image_upload.html', context)
+            
+            -------------------------------------------------------------------------------------------------------------------
+
+# this one tries to check if a student profile has already been created 
+(not functional yet but throw Validation error for non-image types):
+
+def upload_pic(request):
+    print("request method is POST")
+    form = ImageUploadForm(request.POST, request.FILES)
+    context = {
+        "form": form,
+    }
+
+    if form.is_valid():
+        print("upload_pic form valid")
+        User = get_user_model()
+        user = User.objects.get(username="spiderman")    # user can call all the attributes of User model ex. first_name, email etc.
+        check = StudentProfile.objects.filter(user=user)
+
+        if check.exists():
+            print("check exists")
+            user.avatar = form.cleaned_data.get('profile_photo')
+            user.save()
+        else:
+            avatar = form.cleaned_data.get('profile_photo')
+            new_user_profile = StudentProfile.objects.create(user=user, avatar=avatar)
+            new_user_profile.save()
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'students/image_upload.html', context)
+    
+    ------------------------------------------------------------------------------------------------------------------------------------
+            
+### this one works with regular forms but validation for non-image files doesn't work:
+
+def upload_pic(request, form, username):
+        print("upload_pic")
+        if request.method == 'POST':
+            print("request method is POST")
+            # form = ImageUploadForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                print("upload_pic form valid")
+                User = get_user_model()
+                user = User.objects.get(username=username)
+                avatar = form.cleaned_data.get('profile_photo')
+                new_user_profile = StudentProfile.objects.create(user=user, avatar=avatar)
+                new_user_profile.save()

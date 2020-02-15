@@ -1,0 +1,16 @@
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!--{% url 'students:image_upload' as upload_url %}-->
+
+            <form method="post" action='{% url "students:upload_photo" %}' enctype="multipart/form-data">{% csrf_token %}
+                <p>
+                    <!--<input id="id_image" type="file" class="" name="image"> -->
+                    {{ image_form }}
+                </p>
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </form>
+
+

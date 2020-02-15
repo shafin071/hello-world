@@ -1,0 +1,39 @@
+
+
+<!-- Linked to courses/course.html
+    When you press "Add to Cart" , product id of that course is passed to update_cart -->
+
+{% if request.user in course.students.all %}
+    <div class="my-2">
+        <center><button type="submit" class="btn btn-success btn-lg btn-block">Enrolled</button></center>
+    </div>
+
+{% else %}
+
+    <form class="form-course-ajax" method='POST' action='{% url "cart:update" %}'> {% csrf_token %}
+        <input type='hidden' name='course_id' value='{{ course.id }}' />
+        <div class="my-2"><center>
+        <span class='submit-span'>
+            {% if course in cart.courses.all %}
+            
+                <button type="submit" class="btn btn-outline-danger btn-lg btn-block">Remove from Cart</button>
+                
+            {% else %}
+                <button type="submit" class="btn btn-outline-info btn-lg btn-block">Add to Cart</button>
+                    
+                <button type="submit" class="btn btn-outline-warning btn-lg btn-block">Buy Now</button>  
+
+            {% endif %}
+            
+            </span>
+        </center>
+        </div>
+
+    </form>
+
+{% endif %}
+
+
+
+
+

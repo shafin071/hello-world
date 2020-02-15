@@ -1,0 +1,27 @@
+
+
+{% if address_list.exists %}
+<div class="col my-5">
+    <form method="POST" action="{{ action_url }}">{% csrf_token %}
+        {% if next_url %}
+            <input type='hidden' name='next' value='{{ next_url }}' />
+        {% endif %}
+
+        <p class='lead'>Previously Used Addresses</p>
+
+        {% for address in address_list %}
+        <div class="row my-3">
+            <div class="col-1">
+                <input id="{{ address.id }}" type="radio" name="address_id" value="{{ address.id }}" />
+            </div>
+
+            <div class="col-6">
+                {{ address.get_address}} <br>
+            </div>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success">Use Address</button>
+    </form>
+</div>
+{% endif %}

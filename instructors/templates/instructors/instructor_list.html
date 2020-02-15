@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+        {% for instructor in instructors_list %}
+            {% include 'instructors/snippets/list_card.html' with instance=instructor %}
+        {% endfor %}
+
+{% endblock %}

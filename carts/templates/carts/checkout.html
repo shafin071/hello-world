@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+
+        <div class="container my-4">
+            <div class="card">
+              <div class="card-header">
+                <h1 class=""> Finalize Checkout </h1>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">Cart Items:</h5>
+                        <p class="card-text">{% for course in cart_obj.courses.all %} {{course}} - ${{course.price}}
+                        {% if not forloop.last %}<br>{% endif %}{% endfor %}</p>
+                    </div>
+                    <div class="col">
+                        <form class='form' method='post' action='{% url "cart:home" %}'>{% csrf_token %}
+                            <button type='submit' class="btn btn-outline-warning btn-sm">Edit</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="row my-3">
+                    <div class="col">
+                        <h5 class="card-title">Payment Method:</h5>
+                        <div class="show-card">
+                            {% if card_obj %}
+                                <p class="card-text">{{ card_obj.brand }} : **** **** **** {{ card_obj.last4 }}</p>
+                                <p class="card-text">Exp: {{ card_obj.exp_month }}/{{ card_obj.exp_year }}</p>
+                            {% endif %}
+                        </div>
+                            <p class="card-text card-brand"></p>
+                            <p class="card-text card-exp"></p>
+
+                    </div>
+
+                    <div class="col">
+                        <button type='submit' class="btn btn-outline-warning btn-sm edit-payment-info">Edit</button>
+                    </div>
+
+                </div>
+
+                  <div class='row my-4 payment-form d-none'>
+                    <div class='col-9'>
+                        {% include 'billing/payment-method.html' with publish_key=publish_key  %}
+                    </div>
+                  </div>
+
+
+
+                <div class="row my-3">
+                    <div class="col">
+                        <h5 class="card-title">Billing Address:</h5>
+                        <p class="card-text">{{ order.billing_address.get_address }} </p>
+                    </div>
+                    <div class="col">
+                        <button type='submit' class="btn btn-outline-warning btn-sm edit-address">Edit</button>
+                    </div>
+                </div>
+
+                <div class='row my-4 address-form'>
+                    <div class='col-md-6 mx-auto col-10'>
+                        <!-- Billing Address Form -->
+                        {% url "addresses:checkout_address_create" as checkout_address_create %}
+                        <!-- request.build_absolute_uri is a built-in method. Returns the url of the current page -->
+                        {% include 'addresses/address-form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create %}
+                    </div>
+
+                    <div class='col-md-6 mx-auto col-10'>
+                        <!-- Show list of previously used addresses -->
+                        {% url 'addresses:checkout_address_reuse' as checkout_address_reuse %}
+                        {% include 'addresses/prev-addresses.html' with address_list=address_list next_url=request.build_absolute_uri action_url=checkout_address_reuse %}
+                    </div>
+                </div>
+
+                <hr/>
+                <h4> Cart Total: ${{ order.order_total }} </h4>
+
+                <form class='form my-4' method='POST' action='{% url "cart:success" %}'>{% csrf_token %}
+                    <button type='submit' class="btn btn-lg btn-info complete-payment-btn">Complete Payment</button>
+                </form>
+              </div>
+            </div>
+
+    </div>
+
+
+
+{% endblock %}
+

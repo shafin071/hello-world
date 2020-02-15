@@ -1,0 +1,51 @@
+{% load static %}
+
+{% url 'instructors:instructor_profile' as instructors_url %}
+
+ <!-- Page Content -->
+    <div class="container">
+
+      <!-- Card -->
+      <div class="row">
+        <div class="col-md-3">
+           <a href="{{ instance.get_absolute_url }}">
+              <div class="thumbnail">
+              {% if instance.image %}
+                <img class="img-fluid rounded mb-3 mb-md-0" src= "{{ instance.image.url }}" alt="responsive">
+              {% else %}
+                <img class="img-fluid rounded mb-3 mb-md-0" src="{% static 'img/coding1.jpg' %}" alt="Responsive image">
+                  {% endif %}
+              </div>
+           </a>
+        </div>
+
+        <div class="col-md-8">
+          <a class="nav-link" href="{{ instance.get_absolute_url }}"><h3>{{ instance.courseName }}</h3></a>
+            <font size="4">Instructor: <a class="nav-link" href="{{ instance.instructor.get_absolute_url }}">{{ instance.instructor }}</a></font>
+          <p>{{ instance.description }}</p>
+        </div>
+
+          <div class="col-md-1">
+              <div class="row">
+                  <font size="5">${{ instance.price }}</font>
+              </div>
+
+              <div class="row mx-auto">
+                  {% include 'courses/snippets/update-cart.html' with course=instance cart=cart %}
+              </div>
+
+        </div>
+
+          </div>
+        <hr>
+    </div>
+
+
+
+
+
+
+
+
+
+

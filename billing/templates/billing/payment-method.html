@@ -1,0 +1,22 @@
+{% load static %}
+
+<form method="post" id='payment-form' data-token='{{ publish_key }}'>
+  <div class="form-row">
+      <font size="2" color="blue">Use this card no: 4242 4242 4242 4242</font>
+  </div>
+  <div class="form-row">
+    <div id="card-element" class='form-control col-10'>
+      <!-- a Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display form errors -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button class='btn btn-primary my-3'>Submit Payment</button>
+  <button type="button" class="btn btn-light cancel-payment-form">Cancel</button>
+
+</form>
+
+
+<script src='{% static "js/stripe_custom.js" %}'></script>

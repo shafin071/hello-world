@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+          <!-- Title -->
+          <h1 class="mt-4">{{ courses.courseName }}</h1>
+
+          <!-- Instructor -->
+          <p class="lead">
+              Instructor:
+            <a class="nav-link" href="{{ course.instructor.get_absolute_url }}">{{ courses.instructor }}</a>
+          </p>
+
+          <hr>
+
+          <!-- Date/Time -->
+          <p>Posted on January 1, 2018 at 12:00 PM</p>
+
+          <hr>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 my-3">
+                        <!-- Preview Image -->
+                        <img class="img-fluid rounded" src= "{{ courses.image.url }}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <blockquote class="blockquote">
+                            <p class="mb-0">Course Features: </p>
+                        </blockquote>
+                                <p><i class="far fa fa-play-circle"></i> {{ courses.duration }} hours of on-demand video lectures </p>
+                                <p><i class="fa fa-heart-o" aria-hidden="true"></i> Lifetime access </p>
+                                <p><i class="fas fa fa-book"></i> Reading resources </p>
+                                <p><i class="fa fa-file-code-o" aria-hidden="true"></i> Coding exercises and solutions  </p>
+                                <p><i class="fa fa-certificate" aria-hidden="true"></i> Real life projects  </p>
+
+                    </div>
+                </div>
+            </div> <!-- Container for course image and features -->
+
+          <hr>
+
+          <!-- Description -->
+            <blockquote class="blockquote">
+                <p class="mb-0">Description: </p>
+          </blockquote>
+
+            <p class="lead"> {{ courses.description }} </p>
+
+
+            <!-- Prerequisites -->
+            <blockquote class="blockquote">
+                <p class="mb-0">Prerequisites: </p>
+          </blockquote>
+
+            <p> {{ courses.description }} </p>
+
+
+            <!-- Syllabus -->
+          <blockquote class="blockquote">
+            <p class="mb-0">Syllabus: </p>
+          </blockquote>
+
+            <li> Video series 1 </li>
+            <li> Video series 2 </li>
+            <li> Video series 3 </li>
+            <li> Video series 4 </li>
+            <li> Video series 5 </li>
+            <li> Video series 6 </li>
+
+          <hr>
+
+        </div> <!-- Post Content Column -->
+
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+          <!-- Price Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Price</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                    <center><font size="7"> ${{ courses.price }} </font></center>
+
+                <!-- update-cart has the "add to cart" , "remove from cart" etc
+                     buttons. "Enrolled" if the student has paid for course.
+                     All actions redirects to cart_update in view -->
+                     {% include 'courses/snippets/update-cart.html' with course=courses cart=cart %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Instructor Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Meet the instructor</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="thumbnail">
+                            {% include 'courses/snippets/instructor_photo.html' with instance=courses.instructor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col">
+                        <center><font size="5"> <a class="nav-link" href="{{ course_detail.instructor.get_absolute_url }}">
+                            {{ courses.instructor }} </a></font></center>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col">
+                        <center>{{ courses.instructor.experience }}</center>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+{% endblock %}

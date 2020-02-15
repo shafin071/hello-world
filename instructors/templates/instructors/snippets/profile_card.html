@@ -1,0 +1,80 @@
+{% load static %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col">
+
+          <!-- Instructor -->
+          <h1 class="mt-4">{{ instance.fullName }}</h1>
+
+          <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col my-3">
+                        <!-- Profile Photo -->
+                        {% include 'courses/snippets/instructor_photo.html' with instance=instance %}
+                        <!-- <img class="img-fluid rounded" src= "{{ instance.image.url }}" alt=""> -->
+                    </div>
+
+                    <div class="col-sm-8">
+                        <blockquote class="blockquote">
+                            <p class="mb-0"><b>About me: </b></p>
+                        </blockquote>
+                                <p><font size='4'>{{ instance.experience }}</font></p>
+
+                        <div class="row my-5">
+                            <div class="col-3">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0"><b>Courses taught: </b></p>
+                                </blockquote>
+
+                                <!--<blockquote class="blockquote">-->
+                                    <!--<p class="mb-0"><b>Total Students: </b></p>-->
+                                <!--</blockquote>-->
+
+                                <blockquote class="blockquote">
+                                    <p class="mb-0"><b>Average Rating: </b></p>
+                                </blockquote>
+                            </div>
+                            <div class="col-3">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0"> 2</p>
+                                </blockquote>
+
+                                <!--<blockquote class="blockquote">-->
+                                    <!--<p class="mb-0">30</p>-->
+                                <!--</blockquote>-->
+
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">7.4</p>
+                                </blockquote>
+                            </div>
+                        </div> <!-- Instructor stats row -->
+
+                    </div> <!-- About me col -->
+                </div> <!-- First section row -->
+
+                <hr>
+
+                <blockquote class="blockquote">
+                <p class="mb-0">Courses taught by {{ instance.fullName }}: </p>
+                </blockquote>
+
+                <!-- in courses/billing_profile_models.py, the foreign key field instructor has a related name "instructor" so it can be
+                    be used instead of "courses_set" -->
+                <div class="row">
+                   {% for course in instance.courses_by_instructor.all %}
+                    {% include 'instructors/snippets/course_card.html' with instance=course %}
+                    {% endfor %}
+                </div>
+
+            </div> <!-- Main container -->
+
+
+
+
+

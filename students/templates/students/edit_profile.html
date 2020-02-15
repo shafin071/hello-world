@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!--{% url 'students:image_upload' as upload_url %}-->
+<div class="container">
+    <div class="row my-3">
+        <div class="col">
+            <form method="post" action='{% url "students:edit_profile" %}'>{% csrf_token %}
+                <p>
+                    <!--<input id="id_image" type="file" class="" name="image"> -->
+                    {{ form|crispy }}
+                </p>
+                <input type="submit" value="Submit" />
+            </form>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

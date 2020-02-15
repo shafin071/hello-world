@@ -1,0 +1,8 @@
+
+
+
+
+<form class="form-course-ajax" method='POST' action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}'> {% csrf_token %}
+                                        <input class='cart-course-id' type='hidden' name='course_id' value='{{ course_id }}' />
+                                        <button type="submit" class="btn btn-sm btn-danger"><font size="2">Remove</font></button>
+                                    </form>

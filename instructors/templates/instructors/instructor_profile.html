@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    {% include 'instructors/snippets/profile_card.html' with instance=instructors %}
+
+{% endblock %}

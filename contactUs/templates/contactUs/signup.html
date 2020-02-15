@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <div class="container">
+
+        <form method="post" action='{% url "contact:signup_post" %}'>
+            {% csrf_token %}
+
+            First name:<br>
+          <input type="text" name="firstname" value="Mickey">
+          <br>
+          Last name:<br>
+          <input type="text" name="lastname" value="Mouse">
+          <br><br>
+          <input type="submit" value="Submit">
+            </form>
+    </div>
+
+
+{% endblock %}

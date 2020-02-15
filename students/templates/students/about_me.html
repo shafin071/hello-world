@@ -1,0 +1,11 @@
+<!-- {% include "base/system-messages.html" %} -->
+
+{% load crispy_forms_tags %}
+
+    <form class='about-me-form' method="post" action='{% url "students:about_me" %}'>{% csrf_token %}
+        <p>
+            {{ form|crispy }}
+        </p>
+        <input type="submit" class="btn btn-primary" value="Save Changes" />
+        <a class='btn btn-light' href='{{student_profile.get_absolute_url}}'>Cancel</a>
+    </form>

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Cart home page -->
+
+    <div class="container">
+    {% if cart.courses.exists %}
+        <div class="row">
+            <div class="col-9">
+                <table class="table table-striped cart-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Course</th>
+                        <th scope="col"></th>
+                      <!-- <th scope="col">Last</th> -->
+                      <th scope="col">Price</th>
+                    </tr>
+                  </thead>
+
+                    <tbody class="cart-body">
+                        {% for course in cart.courses.all %}
+                            <tr class="cart-product"><td>
+                                <a class="nav-link" href="{{ course.get_absolute_url }}">{{ course.courseName }}</a>
+                              </td>
+
+                                <td>
+                                    {% include 'carts/snippets/remove-course.html' with course_id=course.id %}
+                                </td>
+
+                              <td>${{ course.price}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="cart-item-remove-form" style='display:none'>
+                    {% include 'carts/snippets/remove-course.html' %}
+                </div>
+
+
+            </div>
+
+            <!-- Price Widget -->
+            <div class="col-3">
+              <div class="card my-5">
+                <h5 class="card-header">Total</h5>
+                <div class="card-body price-widget">
+                        <center><font size="7"> $ <span class="cart-total"> {{ cart.total }} </span></font></center>
+
+
+                    <div class="row my-3">
+                        <div class="col-md-7 mx-auto col-10">
+
+                        {% if request.user.is_authenticated %}
+                            <a class = 'btn btn-lg btn-info' href = '{% url "cart:checkout" %}'>Checkout</a>
+                        {% else %}
+                            {% url "students:login" as login %}
+                            <a class = 'btn btn-lg btn-info' href = "{{ login }}?next={{request.path}}">Checkout</a>
+
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+
+    {% else %}
+        <div class="row my-5">
+            <div class="col">
+                    <img src="{% static 'img/cart-empty3.png' %}" class='cart-img-fluid' />
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col mx-auto text-center">
+                <p class="lead my-4"><font size="6">Cart is empty </font></p>
+                <a class = 'btn btn-lg btn-primary' href = '{% url "courses:courses_list" %}'>Shop Courses</a>
+            </div>
+        </div>
+
+    {% endif %}
+
+
+    </div>
+    </div>
+
+{% endblock %}
+
+<!-- {% include 'courses/snippets/update-cart.html' with course=course cart=cart in_cart=True %} -->

@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+
+<form method='POST'
+      action='{% if action_url %}
+        {{ action_url }}
+      {% else %}
+        {% url "students:login" %}
+      {% endif %}'>
+
+    {% csrf_token %}
+    {% if next_url %}
+    <input type='hidden' name='next' value='{{ next_url }}' />
+    {% endif %}
+  {{ form|crispy }}
+  <button type='submit' class='btn btn-success submit-address'>Submit</button>
+  <button type="button" class="btn btn-light cancel-address-form">Cancel</button>
+</form>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Heading -->
+    <div class="container">
+        {% if course_list %}
+            {% if query %}
+                <h2 class="my-4">Search results for {{ query }}:</h2>
+            {% endif %}
+    </div>
+                <div class="row my-3"></div>
+                        {% for courses in course_list %}
+                            {% include 'courses/snippets/card.html' with instance=courses cart=cart %}
+                        {% endfor %}
+                <div class="container">
+
+        {% else %}
+            <h2 class="my-4"> No results found for: {{ query }}</h2>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+

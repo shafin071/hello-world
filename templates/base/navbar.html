@@ -1,0 +1,103 @@
+{% url 'home_page' as home_url %}
+{% url 'contact' as contact_url %}
+{% url 'students:register_page' as register_url %}
+{% url 'students:login' as login_url %}
+{% url 'students:logout' as logout_url %}
+{% url 'students:purchase_history' as purchase_history %}
+{% url 'instructors:instructor_list' as instructors_url %}
+{% url 'courses:courses_list' as courses_url %}
+{% url 'cart:home' as cart_url %}
+
+
+<!-- Logo and link to home page -->
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+
+
+<div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <a class="navbar-brand" href="{{ home_url }}">&lt;HW/&gt;</a>
+
+              <!-- Search bar -->
+              <form method='GET' action='{% url "search:search_list" %}' class="form ml-auto">
+                  <div class="input-group">
+                      <input class="form-control" type="search" placeholder="Search" name="q" aria-label="Search" id="navBarSearchForm">
+                          <span class="input-group-btn">
+                            <button class="btn btn-outline-success" type="submit"><i class="fas fa fa-search"></i></button>
+                          </span>
+                  </div>
+              </form>
+
+
+      <ul class="navbar-nav ml-3">
+
+            <!-- Courses -->
+            <li class="nav-item {% if request.path == courses_url %}active{%endif%}">
+                <a class="nav-link courses-link" href="{{ courses_url }}" tabindex="-1" aria-disabled="true">Courses</a>
+            </li>
+
+            <!-- Instructors -->
+            <li class="nav-item {% if request.path == instructors_url %}active{%endif%}">
+                <a class="nav-link instructor-link" href="{{ instructors_url }}" tabindex="-1" aria-disabled="true">Instructors</a>
+            </li>
+
+
+          <!-- Cart -->
+            <li class="nav-item {% if request.path == cart_url %}active{%endif%}">
+                <a class="nav-link cart-link" href="{{ cart_url }}" tabindex="-1" aria-disabled="true"><i class="fas fa fa-shopping-cart"></i><span class='navbar-cart-count'> {{request.session.cart_items}}</span></a>
+            </li>
+
+
+            {% if request.user.is_authenticated %}
+
+              <!-- User Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle student-profile-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa fa-user"></i> {{request.user.first_name}}</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ request.user.student_profile.get_absolute_url }}">Profile</a>
+                            <a class="dropdown-item" href="{{ purchase_history }}">Purchase History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
+                        </div>
+                </li>
+
+
+            {% else %}
+            <!-- Login -->
+            <li class="nav-item {% if request.path == login_url %}active{%endif%}">
+                <a class="nav-link" tabindex="-1" aria-disabled="true"
+                   href="{{ login_url }}?next={{request.path}}">Login</a>
+            </li>
+
+            <!-- Sign Up -->
+            <li class="nav-item {% if request.path == register_url %}active{%endif%}">
+                <a class="nav-link signup-link" href="{{ register_url }}?next={{request.path}}" tabindex="-1" aria-disabled="true">Signup</a>
+            </li>
+            {% endif %}
+      </ul>
+
+
+
+  </div>
+
+
+</div> <!-- container -->
+</nav>
+
+
+
+
+
+
+
+
