@@ -1,4 +1,4 @@
-# hello-world
+# < hello-world />
 A dummy eLearning website built with django, JavaScript, Bootstrap with various other tools to provide user experience as a student. Hosted with Heroku and AWS S3
 
 ## Situation:
@@ -30,4 +30,9 @@ _This website is a personal project, not a real eLearning platform_
 * Python v3
 * Django
 * Django REST Framework
-*
+* Bootstrap
+* JavaScript / jQuery
+* PostgreSQL
+* Stripe API
+* Heroku
+* AWS S3
