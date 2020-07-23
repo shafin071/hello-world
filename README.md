@@ -19,6 +19,15 @@ Built a demo eLearning website
 - See transaction history
 
 ## Demo:
+
+#### Disclaimer: 
+_This website is a personal project, not a real eLearning platform_
+
 [Live website](https://shafin-elearning.herokuapp.com/)
 
 
+## Resources used for this project:
+* Python v3
+* Django
+* Django REST Framework
+*
