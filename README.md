@@ -7,7 +7,7 @@ Wanted to come up with a project so I could learn full-stack application develop
 ## Task:
 Built a demo eLearning website
 
-## Planning:
+## System Design:
 ![drawing](https://github.com/shafin071/hello-world/blob/master/system_design.jpg)
 
 
