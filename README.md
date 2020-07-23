@@ -10,6 +10,14 @@ Built a demo eLearning website
 ## System Design:
 ![drawing](https://github.com/shafin071/hello-world/blob/master/system_design.jpg)
 
+## Features Available for Users
+- Register user
+- User authentication and login
+- See and edit profile
+- See available courses
+- Buy courses
+- See transaction history
+
 ## Demo:
 [Live website](https://shafin-elearning.herokuapp.com/)
 
