@@ -9,8 +9,6 @@ Built a demo eLearning website
 
 ## Planning:
 
-
-
 The analysis notebook consists of 6 segments:
 
 1. Exploratory Data Analysis
